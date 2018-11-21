@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="contenedorPrimario" focusTraversable="true" prefHeight="601.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestion.ProveedoresController">
+   <children>
+      <Pane fx:id="proveePane" focusTraversable="true" layoutX="14.0" layoutY="18.0" prefHeight="170.0" prefWidth="360.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="63.0" text="Código" />
+            <Label layoutX="14.0" layoutY="39.0" prefHeight="25.0" prefWidth="88.0" text="Razon Social" />
+            <Label layoutX="14.0" layoutY="100.0" prefHeight="21.0" prefWidth="88.0" text="Documento" />
+            <Label layoutX="16.0" layoutY="135.0" prefHeight="21.0" prefWidth="123.0" text="Condicion Triburaria" />
+            <TextField fx:id="txtIdProvee" alignment="CENTER_RIGHT" editable="false" layoutX="63.0" layoutY="14.0" prefHeight="25.0" prefWidth="88.0" />
+            <TextField fx:id="txtRazon" alignment="CENTER_RIGHT" disable="true" layoutX="14.0" layoutY="64.0" prefHeight="25.0" prefWidth="338.0" />
+            <ComboBox fx:id="cboTipoDoc" disable="true" layoutX="93.0" layoutY="98.0" onAction="#habilitarText" prefHeight="25.0" prefWidth="96.0" />
+            <TextField fx:id="txtNroDoc" alignment="CENTER_RIGHT" disable="true" layoutX="203.0" layoutY="98.0" onKeyTyped="#esNumDoc" />
+            <ComboBox fx:id="cboCondTrib" disable="true" layoutX="142.0" layoutY="133.0" prefHeight="25.0" prefWidth="123.0" />
+         </children>
+         <effect>
+            <Blend />
+         </effect>
+         <padding>
+            <Insets bottom="1.0" left="3.0" />
+         </padding>
+      </Pane>
+        <Pane fx:id="direPane" focusTraversable="true" layoutX="382.0" layoutY="18.0" prefHeight="236.0" prefWidth="360.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="60.0" text="Calle">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCalle" alignment="CENTER_RIGHT" disable="true" layoutX="74.0" layoutY="12.0" />
+            <Label layoutX="14.0" layoutY="45.0" prefHeight="17.0" prefWidth="60.0" text="Nro">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtNro" alignment="CENTER_RIGHT" disable="true" layoutX="74.0" layoutY="43.0" />
+            <Label layoutX="14.0" layoutY="77.0" prefHeight="17.0" prefWidth="60.0" text="Cruce 1">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCruce1" alignment="CENTER_RIGHT" disable="true" layoutX="74.0" layoutY="75.0" />
+            <Label layoutX="14.0" layoutY="108.0" prefHeight="17.0" prefWidth="60.0" text="Cruce 2">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCruce2" alignment="CENTER_RIGHT" disable="true" layoutX="74.0" layoutY="106.0" prefHeight="21.0" prefWidth="149.0" />
+            <Label layoutX="14.0" layoutY="137.0" prefHeight="17.0" prefWidth="60.0" text="Piso">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtPiso" alignment="CENTER_RIGHT" disable="true" layoutX="74.0" layoutY="135.0" prefHeight="25.0" prefWidth="60.0" />
+            <Label layoutX="150.0" layoutY="137.0" prefHeight="17.0" prefWidth="60.0" text="Dpto">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtDpto" alignment="CENTER_RIGHT" disable="true" layoutX="193.0" layoutY="135.0" prefHeight="25.0" prefWidth="60.0" />
+            <Label layoutX="253.0" layoutY="169.0" prefHeight="17.0" prefWidth="77.0" text="Codigo Postal" />
+            <Label layoutX="13.0" layoutY="203.0" prefHeight="17.0" prefWidth="77.0" text="Localidad" />
+            <Label layoutX="13.0" layoutY="169.0" prefHeight="17.0" prefWidth="77.0" text="Provincia" />
+            <TextField fx:id="txtCodPos" alignment="CENTER" editable="false" layoutX="253.0" layoutY="191.0" prefHeight="25.0" prefWidth="77.0" />
+            <ComboBox fx:id="cboLocalidad" disable="true" layoutX="74.0" layoutY="199.0" onAction="#setCodigoPostal" prefHeight="25.0" prefWidth="123.0" />
+            <ComboBox fx:id="cboProvincia" disable="true" layoutX="74.0" layoutY="165.0" onAction="#cargarLista" prefHeight="25.0" prefWidth="123.0" />
+            <Label layoutX="268.0" layoutY="16.0" text="Id Dirección" />
+            <TextField fx:id="txtIdDire" alignment="CENTER_RIGHT" editable="false" layoutX="257.0" layoutY="43.0" prefHeight="25.0" prefWidth="88.0" />
+         </children>
+         <effect>
+            <Blend />
+         </effect>
+         <padding>
+            <Insets bottom="1.0" left="2.0" right="3.0" />
+         </padding>
+      </Pane>
+      <Pane fx:id="libPane" focusTraversable="true" layoutX="14.0" layoutY="188.0" prefHeight="107.0" prefWidth="360.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Tipo" />
+            <Label layoutX="121.0" layoutY="14.0" prefHeight="17.0" prefWidth="114.0" text="Contacto" />
+            <TextField fx:id="txtContacto" alignment="CENTER_RIGHT" layoutX="121.0" layoutY="32.0" prefHeight="25.0" prefWidth="181.0" />
+            <ComboBox fx:id="cboTipoContacto" layoutX="14.0" layoutY="32.0" prefHeight="25.0" prefWidth="96.0" />
+            <Button fx:id="cmdAgregar" layoutX="180.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Agregar" />
+            <Button fx:id="cmdModContacto" layoutX="269.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Modificar" />
+         </children>
+         <effect>
+            <Blend />
+         </effect>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="3.0" />
+         </padding>
+      </Pane>
+      <TableView fx:id="tblProveedores" layoutX="14.0" layoutY="340.0" onKeyTyped="#buscar" onMouseClicked="#sleccionar" prefHeight="261.0" prefWidth="763.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+         <effect>
+            <Blend />
+         </effect>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </TableView>
+      <TextField fx:id="txtBuscar" alignment="CENTER_RIGHT" layoutX="562.0" layoutY="254.0" onKeyTyped="#buscar" prefHeight="25.0" prefWidth="181.0">
+         <effect>
+            <Blend />
+         </effect></TextField>
+      <Label alignment="CENTER" layoutX="446.0" layoutY="257.0" prefHeight="17.0" prefWidth="96.0" text="Buscar">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <effect>
+            <Blend />
+         </effect>
+      </Label>
+      <Button fx:id="cmdModificar" disable="true" layoutX="542.0" layoutY="301.0" mnemonicParsing="false" onAction="#modificar" prefHeight="25.0" prefWidth="96.0" text="Modificar" />
+      <Button fx:id="cmdNuevo" layoutX="433.0" layoutY="301.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="25.0" prefWidth="96.0" text="Nuevo" />
+      <Button fx:id="cmdGenerar" disable="true" layoutX="646.0" layoutY="301.0" mnemonicParsing="false" onAction="#generar" prefHeight="25.0" prefWidth="96.0" text="Generar" />
+      <Button fx:id="cmdCancelar" cancelButton="true" disable="true" layoutX="433.0" layoutY="301.0" mnemonicParsing="false" onAction="#cancelar" opacity="0.0" prefHeight="25.0" prefWidth="96.0" text="Cancelar" />
+      <Button fx:id="cmdGuardar" disable="true" layoutX="542.0" layoutY="301.0" mnemonicParsing="false" onAction="#guardar" opacity="0.0" prefHeight="25.0" prefWidth="96.0" text="Guardar" />
+   </children>
+</AnchorPane>

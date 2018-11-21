@@ -1,0 +1,43 @@
+
+        
+//        codigo      = new TableColumn("Código");
+//        razon       = new TableColumn("Razon");
+//        tipoDoc     = new TableColumn("Tipo Doc");
+//        nDoc        = new TableColumn("Nro Doc");
+//        condtribtc  = new TableColumn("Cond Trib");
+//        calle       = new TableColumn("Calle");
+//        nro         = new TableColumn("Nro");
+//        calle1      = new TableColumn("Calle 1");
+//        calle2      = new TableColumn("Calle 2");
+//        piso        = new TableColumn("Piso");
+//        dpto        = new TableColumn("Dpto");
+//        cp          = new TableColumn("CP");
+//        localidadtc = new TableColumn("Localidad");
+//        provinciatc = new TableColumn("Provincia");        
+//        try {
+//            codigo.setCellValueFactory(new PropertyValueFactory<>("Código"));
+//            razon.setCellValueFactory(new PropertyValueFactory<>("Razon"));
+//            tipoDoc.setCellValueFactory(new PropertyValueFactory<>("Doc"));
+//            nDoc.setCellValueFactory(new PropertyValueFactory<>("Número"));
+//            calle.setCellValueFactory(new PropertyValueFactory<>("Calle"));
+//            nro.setCellValueFactory(new PropertyValueFactory<>("Nro"));
+//            calle1.setCellValueFactory(new PropertyValueFactory<>("Cruce 1"));
+//            calle2.setCellValueFactory(new PropertyValueFactory<>("Cruce 2"));
+//            piso.setCellValueFactory(new PropertyValueFactory<>("Piso"));
+//            dpto.setCellValueFactory(new PropertyValueFactory<>("Dpto"));
+//            localidadtc.setCellValueFactory(new PropertyValueFactory<>("Localidad"));
+//            cp.setCellValueFactory(new PropertyValueFactory<>("CP"));
+//            provinciatc.setCellValueFactory(new PropertyValueFactory<>("Provincia"));
+//        } catch (Exception e) {
+//        }
+        
+        
+//        //tblProveedores.getColumns().clear();
+//        
+//        //tblProveedores.getColumns().addAll(codigo,razon,tipoDoc,nDoc,condtribtc,calle,nro,calle1,calle2,piso,dpto,cp,localidadtc,provinciatc);
+//        ListDetalle = new ProveedorJpaController().getDetalleProveedor();
+//        ObListDetalle = FXCollections.observableArrayList(ListDetalle);
+//        tblProveedores.setItems(ObListDetalle);
+//        
+//
+//        //new FxTable().cargar(ListDetalle,tblProveedores);
