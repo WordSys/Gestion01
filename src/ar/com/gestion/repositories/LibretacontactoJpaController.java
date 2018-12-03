@@ -207,14 +207,13 @@ public class LibretacontactoJpaController implements Serializable {
     
     public void save (Libretacontacto libretacontacto){
         
-        String query = "insert into libretacontacto (lib_id,tcontacto_id,dir_id,lib_contacto)"
-                        + "values(?,?,?,?)";
+        String query = "insert into libretacontacto (tcontacto_id,dir_id,lib_contacto)"
+                        + "values(?,?,?)";
        
         try {
             PreparedStatement ps = conn.prepareStatement(query,1 );// 1 = PreparedStatement.RETURN_GENERATED_KEYS)
-            ps.setInt(0, libretacontacto.getLibId());
-            ps.setInt(1, libretacontacto.getTcontactoId().getTcontactoId());
-            ps.setInt(2, libretacontacto.getDirId().getDirId());
+            ps.setInt(1, libretacontacto.getTcontacto_Id());
+            ps.setInt(2, libretacontacto.getDir_Id());
             ps.setString(3, libretacontacto.getLibContacto());
             
             ps.execute();
@@ -301,9 +300,6 @@ public class LibretacontactoJpaController implements Serializable {
         }
         return ultimoId;
         
-        
     }
-    
-    
     
 }

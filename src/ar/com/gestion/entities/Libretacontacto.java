@@ -68,6 +68,12 @@ public class Libretacontacto implements Serializable {
         this.dir_Id = dir_Id;
         this.libContacto = libContacto;
     }
+    
+    public Libretacontacto(Integer tcontacto_Id, Integer dir_Id, String libContacto) {
+        this.tcontacto_Id = tcontacto_Id;
+        this.dir_Id = dir_Id;
+        this.libContacto = libContacto;
+    }
 
     public Integer getLibId() {
         return libId;
@@ -124,6 +130,22 @@ public class Libretacontacto implements Serializable {
     @Override
     public String toString() {
         return "ar.com.gestion.entities.Libretacontacto[ libId=" + libId + " ]";
+    }
+
+    public Integer getDir_Id() {
+        return dir_Id;
+    }
+
+    public void setDir_Id(Integer dir_Id) {
+        this.dir_Id = dir_Id;
+    }
+
+    public Integer getTcontacto_Id() {
+        return tcontacto_Id;
+    }
+
+    public void setTcontacto_Id(Integer tcontacto_Id) {
+        this.tcontacto_Id = tcontacto_Id;
     }
     
 }

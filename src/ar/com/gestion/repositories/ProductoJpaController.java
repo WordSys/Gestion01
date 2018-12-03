@@ -349,6 +349,30 @@ public class ProductoJpaController implements Serializable {
         }
         return lista;
     }
+    
+    public List<Producto> getDetalle(){
+        List<Producto> lista = new ArrayList();
+        String query = "select p.prod_id as Codigo, p.prod_desc as Descripcion, p.prod_can as Cantidad, p.prod_pu as PU, "
+                + "pp.prove_id as Codigo_ Prove, pp.prove_desc as Razon from producto p, proveedor pp";
+        try {
+            ResultSet rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                Producto producto = new Producto(
+                        rs.getInt("prod_id"),
+                        rs.getString("prod_desc"),
+                        rs.getDouble("prod_can"),
+                        rs.getDouble("prod_pu"),
+                        rs.getInt("prove_id")
+                ); 
+                lista.add(producto);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return lista;
+    }
+    
     public List<Producto> getByDescripcion(String descripcion){
         return getByFiltro("prod_desc ='"+descripcion+"'");
     }

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" fx:id="contenedorPrimario" prefHeight="601.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestion.EmpleadosController">
+   <children>
+      <Pane fx:id="direPane" layoutX="382.0" layoutY="18.0" prefHeight="261.0" prefWidth="360.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="60.0" text="Calle">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCalle" layoutX="74.0" layoutY="12.0" />
+            <Label layoutX="14.0" layoutY="45.0" prefHeight="17.0" prefWidth="60.0" text="Nro">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtNro" layoutX="74.0" layoutY="43.0" />
+            <Label layoutX="14.0" layoutY="77.0" prefHeight="17.0" prefWidth="60.0" text="Cruce 1">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCruce1" layoutX="74.0" layoutY="75.0" />
+            <Label layoutX="14.0" layoutY="108.0" prefHeight="17.0" prefWidth="60.0" text="Cruce 2">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtCruce2" layoutX="74.0" layoutY="106.0" prefHeight="21.0" prefWidth="149.0" />
+            <Label layoutX="14.0" layoutY="137.0" prefHeight="17.0" prefWidth="60.0" text="Piso">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtPiso" layoutX="74.0" layoutY="135.0" prefHeight="25.0" prefWidth="60.0" />
+            <Label layoutX="150.0" layoutY="137.0" prefHeight="17.0" prefWidth="60.0" text="Dpto">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </Label>
+            <TextField fx:id="txtDpto" layoutX="193.0" layoutY="135.0" prefHeight="25.0" prefWidth="60.0" />
+            <Label layoutX="240.0" layoutY="169.0" prefHeight="17.0" prefWidth="77.0" text="Codigo Postal" />
+            <Label layoutX="14.0" layoutY="169.0" prefHeight="17.0" prefWidth="77.0" text="Localidad" />
+            <Label layoutX="14.0" layoutY="197.0" prefHeight="17.0" prefWidth="77.0" text="Provincia" />
+            <TextField fx:id="txtCodPos" layoutX="240.0" layoutY="193.0" prefHeight="25.0" prefWidth="77.0" />
+            <ComboBox fx:id="cboLocalidad" layoutX="73.0" layoutY="165.0" prefHeight="25.0" prefWidth="123.0" />
+            <ComboBox fx:id="cboProvincia" layoutX="73.0" layoutY="193.0" prefHeight="25.0" prefWidth="123.0" />
+            <Label layoutX="268.0" layoutY="16.0" text="Id Dirección" />
+            <TextField fx:id="txtIdDire" layoutX="257.0" layoutY="43.0" prefHeight="25.0" prefWidth="88.0" />
+            <Button fx:id="cmdGenerar" layoutX="158.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Generar" />
+            <Button fx:id="cmdModificar" layoutX="261.0" layoutY="224.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Modificar" />
+         </children>
+      </Pane>
+      <Pane fx:id="libPane" layoutX="14.0" layoutY="254.0" prefHeight="100.0" prefWidth="360.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Tipo" />
+            <Label layoutX="121.0" layoutY="14.0" prefHeight="17.0" prefWidth="114.0" text="Contacto" />
+            <TextField fx:id="txtContacto" layoutX="121.0" layoutY="32.0" prefHeight="25.0" prefWidth="181.0" />
+            <ComboBox fx:id="cboTipoContacto" layoutX="14.0" layoutY="32.0" prefHeight="25.0" prefWidth="96.0" />
+            <Button fx:id="cmdAgregar" layoutX="180.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Agregar" />
+            <Button fx:id="cmdModContacto" layoutX="269.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Modificar" />
+         </children>
+      </Pane>
+      <TableView fx:id="tblEmpleados" layoutX="14.0" layoutY="340.0" prefHeight="248.0" prefWidth="763.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtBuscar" layoutX="506.0" layoutY="314.0" prefHeight="25.0" prefWidth="236.0" />
+      <Button fx:id="cmdBuscar" layoutX="406.0" layoutY="314.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Buscar" />
+      <Pane fx:id="empPane" layoutX="14.0" layoutY="24.0" prefHeight="229.0" prefWidth="360.0">
+         <children>
+            <TextField fx:id="txtIdCiente" layoutX="65.0" layoutY="6.0" prefHeight="25.0" prefWidth="88.0" />
+            <Label layoutX="14.0" layoutY="6.0" prefHeight="25.0" prefWidth="63.0" text="Código" />
+            <Label layoutX="174.0" layoutY="8.0" prefHeight="21.0" prefWidth="88.0" text="Fecha de alta" />
+            <TextField fx:id="txtFechaAlta" layoutX="250.0" layoutY="6.0" prefHeight="25.0" prefWidth="96.0" />
+            <TextField fx:id="txtRazon" layoutX="77.0" layoutY="40.0" prefHeight="25.0" prefWidth="269.0" />
+            <TextField fx:id="txtRazon1" layoutX="77.0" layoutY="72.0" prefHeight="25.0" prefWidth="269.0" />
+            <Label layoutX="14.0" layoutY="40.0" prefHeight="25.0" prefWidth="63.0" text="Nobre/s" />
+            <Label layoutX="14.0" layoutY="72.0" prefHeight="25.0" prefWidth="63.0" text="Apellido/s" />
+            <Label layoutX="12.0" layoutY="103.0" prefHeight="21.0" prefWidth="123.0" text="Fecha de Nacimiento" />
+            <TextField fx:id="txtFechaAlta1" layoutX="136.0" layoutY="101.0" prefHeight="25.0" prefWidth="88.0" />
+            <Label layoutX="14.0" layoutY="135.0" prefHeight="21.0" prefWidth="77.0" text="Estado Civil" />
+            <TextField fx:id="txtFechaAlta11" layoutX="100.0" layoutY="133.0" prefHeight="25.0" prefWidth="123.0" />
+            <TextField fx:id="txtFechaAlta12" layoutX="298.0" layoutY="101.0" prefHeight="25.0" prefWidth="48.0" />
+            <Label layoutX="256.0" layoutY="103.0" prefHeight="21.0" prefWidth="77.0" text="Hijos" />
+            <Label layoutX="13.0" layoutY="165.0" prefHeight="21.0" prefWidth="96.0" text="Documento" />
+            <TextField fx:id="txtNroDoc" layoutX="199.0" layoutY="163.0" />
+            <ComboBox fx:id="cboTipoDoc" layoutX="89.0" layoutY="163.0" prefHeight="25.0" prefWidth="96.0" />
+            <Button fx:id="cmdAlta" layoutX="137.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Alta" />
+            <Button fx:id="cmdModificar1" layoutX="247.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Modificar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="Gestion01PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ar.com.gestion.entities.Venta</class>
+    <class>ar.com.gestion.entities.Detallecomp</class>
+    <class>ar.com.gestion.entities.Tcontacto</class>
+    <class>ar.com.gestion.entities.Cheques</class>
+    <class>ar.com.gestion.entities.Producto</class>
+    <class>ar.com.gestion.entities.Tdoc</class>
+    <class>ar.com.gestion.entities.Direccion</class>
+    <class>ar.com.gestion.entities.Libretacontacto</class>
+    <class>ar.com.gestion.entities.Compra</class>
+    <class>ar.com.gestion.entities.Ctacobrar</class>
+    <class>ar.com.gestion.entities.Proveedor</class>
+    <class>ar.com.gestion.entities.EntiFinanc</class>
+    <class>ar.com.gestion.entities.Comprobante</class>
+    <class>ar.com.gestion.entities.Condtrib</class>
+    <class>ar.com.gestion.entities.Provincia</class>
+    <class>ar.com.gestion.entities.Localidad</class>
+    <class>ar.com.gestion.entities.Categoria</class>
+    <class>ar.com.gestion.entities.Pago</class>
+    <class>ar.com.gestion.entities.Empleado</class>
+    <class>ar.com.gestion.entities.Detallevta</class>
+    <class>ar.com.gestion.entities.Condop</class>
+    <class>ar.com.gestion.entities.Users</class>
+    <class>ar.com.gestion.entities.Cliente</class>
+    <class>ar.com.gestion.entities.Ctapagar</class>
+    <class>ar.com.gestion.entities.Cobranzas</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.141:3306/tablon?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

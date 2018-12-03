@@ -546,6 +546,7 @@ public class ProveedorJpaController implements Serializable {
         if(lista.size()==0) return null;
         else return lista.get(0);
     }
+    
     public List<Proveedor> getAll(){
 //        return getByFiltro("1=1");
         List<Proveedor> lista = new ArrayList();
@@ -568,6 +569,50 @@ public class ProveedorJpaController implements Serializable {
             System.out.println(e);
         }
         return lista;
+    }
+    
+    public List<Proveedor> getIdAndDesc(){
+        List<Proveedor> lista = new ArrayList();
+        String query = "select prove_id as codigo, prove_razon as razon from proveedor";
+        try {
+            ResultSet rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                Proveedor p = new Proveedor(
+                     rs.getInt("codigo"),
+                     rs.getString("razon")
+                );
+                lista.add(p);
+            }
+            
+        } catch (Exception e) {
+        }
+        return lista;
+    }
+    
+    public List<Proveedor> getByFiltroProvee(String filtro){
+        List<Proveedor> lista = new ArrayList();
+        String query = "select prove_id as codigo, prove_razon as razon from proveedor where " + filtro;
+        try {
+            ResultSet rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                Proveedor p = new Proveedor(
+                     rs.getInt("codigo"),
+                     rs.getString("razon")
+                );
+                lista.add(p);
+            }
+            
+        } catch (Exception e) {
+        }
+        return lista;
+    }
+    
+    public List<Proveedor> getLikeRazonProvee(String razon){
+        return getByFiltroProvee("p.prove_razon like'%"+razon+"%'");
+    }
+    
+    public List<Proveedor> getByCodigoProvee(Integer id){
+        return getByFiltroProvee("codigo='"+id+"'");
     }
     
     public List<DetalleProveedor> getByFiltro(String filtro){
@@ -660,8 +705,21 @@ public class ProveedorJpaController implements Serializable {
             System.out.println(e);
         }
         return ultimoId;
-        
-        
+    }
+    
+    public int getDirIdByProveId(Integer id){
+        int dirId = 0;
+        String query = "Select dir_id from proveedor where prove_id =" + id;
+        try {
+            ResultSet rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                dirId = rs.getInt("dir_id");
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return dirId;
     }
     
     public List<DetalleProveedor> getDetalleProveedor(){
@@ -672,9 +730,9 @@ public class ProveedorJpaController implements Serializable {
                 + "            c.condtrib_desc as condTrib, d.dir_calle as calle, d.dir_nro as nro, d.dir_cruce1 as calle1,"
                 + "            d.dir_cruce2 as calle2, d.dir_piso as piso, d.dir_dpto as dpto, l.nombre as Localidad, "
                 + "            d.dir_cp as CP, pcia.nombre as Provincia \n"
-                + "FROM   proveedor p, direccion d, localidad l, provincia pcia, tdoc t, condtrib c \n"
+                + "FROM   proveedor p, direccion d, localidad l, provincia pcia, tdoc t, condtrib c\n"
                 + "WHERE  p.tdoc_id = t.tdoc_id and p.condtrib_id = c.condtrib_id and p.dir_id = d.dir_id and "
-                + "       d.localidad_id = l.id and d.provincia_id = pcia.id\n"
+                + "       d.localidad_id = l.id and d.provincia_id = pcia.id \n"
                 + "ORDER BY p.prove_id";
 
         try {

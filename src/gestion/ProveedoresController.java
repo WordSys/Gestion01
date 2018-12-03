@@ -21,6 +21,7 @@ import ar.com.gestion.repositories.TdocJpaController;
 import ar.com.gestion.repositories.exceptions.IllegalOrphanException;
 import ar.com.gestion.utils.FxCbo;
 import ar.com.gestion.utils.FxTable;
+import ar.com.gestion.utils.Validator;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class ProveedoresController implements Initializable {
     private  TableColumn cp;
     private  TableColumn provinciatc;
     List<Proveedor> listProveedor;
-    List<DetalleProveedor> ListDetalle;
+    List<DetalleProveedor> listDetalle;
     ObservableList<DetalleProveedor> ObListDetalle;
     
 
@@ -125,6 +126,7 @@ public class ProveedoresController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cargarTabla();
+        
     }
         
     public void iniciarCombos(){
@@ -174,10 +176,10 @@ public class ProveedoresController implements Initializable {
 
     public void cargarTabla() {
         
-        ListDetalle = new ProveedorJpaController().getDetalleProveedor();
+        listDetalle = new ProveedorJpaController().getDetalleProveedor();
         
-        new FxTable().cargar(ListDetalle,tblProveedores);
-        tblProveedores.scrollTo(ListDetalle.size());
+        new FxTable().cargar(listDetalle,tblProveedores);
+        tblProveedores.scrollTo(listDetalle.size());
         
     }
     
@@ -300,87 +302,111 @@ public class ProveedoresController implements Initializable {
 
     @FXML
     private void modificar(ActionEvent event) {
+        if (validar()) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Dialogo de confirmación");
+            alert.setHeaderText("Modificar los datos.");
+            alert.setContentText("Esta seguro que desea modificar ?");
 
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Dialogo de confirmación");
-        alert.setHeaderText("Modificar los datos.");
-        alert.setContentText("Esta seguro que desea modificar ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                // ... user chose OK
+                DetalleProveedor detalle = tblProveedores.getSelectionModel().getSelectedItem();
+                int proId = detalle.getCodigo();
+                int dirId = new DireccionJpaController().getDirIdByProve(proId);
+                String razon = txtRazon.getText();
+                int tdoc = new TdocJpaController().getByIdOfName(cboTipoDoc.getValue().toString());
+                long ndoc = Long.valueOf(txtNroDoc.getText());
+                int condtrib = new CondtribJpaController().getByIdOfName(cboCondTrib.getValue().toString());
+                String calle = txtCalle.getText();
+                int nro = Integer.parseInt(txtNro.getText());
+                String cruce1 = txtCruce1.getText();
+                String cruce2 = txtCruce2.getText();
+                int piso = piso();
+                String dpto = dpto();
+                short cp = Short.parseShort(txtCodPos.getText());
+                int loc = new LocalidadJpaController().getIdLocalidad(cboLocalidad.getValue().toString());
+                short pcia = new ProvinciaJpaController().getByIdOfProv(cboProvincia.getValue().toString());
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            // ... user chose OK
-            DetalleProveedor detalle = tblProveedores.getSelectionModel().getSelectedItem();
-            int proId = detalle.getCodigo();
-            int dirId = new DireccionJpaController().getDirIdByProve(proId);
-            String razon = txtRazon.getText();
-            int tdoc = new TdocJpaController().getByIdOfName(cboTipoDoc.getValue().toString());
-            long ndoc = Long.valueOf(txtNroDoc.getText());
-            int condtrib = new CondtribJpaController().getByIdOfName(cboCondTrib.getValue().toString());
-            String calle = txtCalle.getText();
-            int nro = Integer.parseInt(txtNro.getText());
-            String cruce1 = txtCruce1.getText();
-            String cruce2 = txtCruce2.getText();
-            int piso = piso();
-            String dpto = dpto();
-            short cp = Short.parseShort(txtCodPos.getText());
-            int loc = new LocalidadJpaController().getIdLocalidad(cboLocalidad.getValue().toString());
-            short pcia = new ProvinciaJpaController().getByIdOfProv(cboProvincia.getValue().toString());
+                Direccion direccion = new Direccion(
+                        calle, nro, cruce1, cruce2, piso, dpto, cp, loc, pcia
+                );
+                new DireccionJpaController().update(direccion, dirId);
 
-            Direccion direccion = new Direccion(
-                    calle, nro, cruce1, cruce2, piso, dpto, cp, loc, pcia
-            );
-            new DireccionJpaController().update(direccion, dirId);
+                Proveedor proveedor = new Proveedor(
+                        razon, tdoc, ndoc, condtrib, dirId
+                );
+                new ProveedorJpaController().update(proveedor, proId);
+                cargarTabla();
+                tblProveedores.requestFocus();
+                tblProveedores.getSelectionModel().select(proId - 1);
 
-            Proveedor proveedor = new Proveedor(
-                    razon, tdoc, ndoc, condtrib, dirId
-            );
-            new ProveedorJpaController().update(proveedor, proId);
+            } else {
+                limpiarCombos();
+                limpiarTextos();
+                cargarTabla();
+                desHabilitar();
+                cmdModificar.setDisable(true);
+                cmdCancelar.opacityProperty().set(0);
+                cmdCancelar.setDisable(true);
+                cmdNuevo.opacityProperty().set(1);
+                cmdNuevo.setDisable(false);
+            }
+            limpiarCombos();
+            limpiarTextos();
             cargarTabla();
-            tblProveedores.requestFocus();
-            tblProveedores.getSelectionModel().select(proId - 1);
-            
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            desHabilitar();
+            cmdModificar.setDisable(true);
+            cmdCancelar.opacityProperty().set(0);
+            cmdCancelar.setDisable(true);
+            cmdNuevo.opacityProperty().set(1);
+            cmdNuevo.setDisable(false);
         }
 
     }
 
     private void generarProvedor() throws IllegalOrphanException {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Dialogo de confirmación");
-        alert.setHeaderText("Guardar los datos.");
-        alert.setContentText("Esta seguro que desea guardar los datos ?");
+        if (validar()) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Dialogo de confirmación");
+            alert.setHeaderText("Guardar los datos.");
+            alert.setContentText("Esta seguro que desea guardar los datos ?");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            // ... user chose OK
-            String razon = txtRazon.getText();
-            int tdoc = new TdocJpaController().getByIdOfName(cboTipoDoc.getValue().toString());
-            long ndoc = Long.valueOf(txtNroDoc.getText());
-            int condtrib = new CondtribJpaController().getByIdOfName(cboCondTrib.getValue().toString());
-            String calle = txtCalle.getText();
-            int nro = Integer.parseInt(txtNro.getText());
-            String cruce1 = txtCruce1.getText();
-            String cruce2 = txtCruce2.getText();
-            int piso = piso();
-            String dpto = dpto();
-            short cp = Short.parseShort(txtCodPos.getText());
-            int loc = new LocalidadJpaController().getIdLocalidad(cboLocalidad.getValue().toString());
-            short pcia = new ProvinciaJpaController().getByIdOfProv(cboProvincia.getValue().toString());
-            Direccion direccion = new Direccion(
-                    calle, nro, cruce1, cruce2, piso, dpto, cp, loc, pcia
-            );
-            new DireccionJpaController().save(direccion);
-            int dirId = direccion.getDirId();
-            txtIdDire.setText(String.valueOf(dirId));
-            Proveedor proveedor = new Proveedor(
-                    razon, tdoc, ndoc, condtrib, dirId
-            );
-            new ProveedorJpaController().save(proveedor);
-            txtIdProvee.setText(String.valueOf(proveedor.getProveId()));
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                // ... user chose OK
+                String razon = txtRazon.getText();
+                int tdoc = new TdocJpaController().getByIdOfName(cboTipoDoc.getValue().toString());
+                long ndoc = Long.valueOf(txtNroDoc.getText());
+                int condtrib = new CondtribJpaController().getByIdOfName(cboCondTrib.getValue().toString());
+                String calle = txtCalle.getText();
+                int nro = Integer.parseInt(txtNro.getText());
+                String cruce1 = txtCruce1.getText();
+                String cruce2 = txtCruce2.getText();
+                int piso = piso();
+                String dpto = dpto();
+                short cp = Short.parseShort(txtCodPos.getText());
+                int loc = new LocalidadJpaController().getIdLocalidad(cboLocalidad.getValue().toString());
+                short pcia = new ProvinciaJpaController().getByIdOfProv(cboProvincia.getValue().toString());
+                Direccion direccion = new Direccion(
+                        calle, nro, cruce1, cruce2, piso, dpto, cp, loc, pcia
+                );
+                new DireccionJpaController().save(direccion);
+                int dirId = direccion.getDirId();
+                txtIdDire.setText(String.valueOf(dirId));
+                Proveedor proveedor = new Proveedor(
+                        razon, tdoc, ndoc, condtrib, dirId
+                );
+                new ProveedorJpaController().save(proveedor);
+                txtIdProvee.setText(String.valueOf(proveedor.getProveId()));
+            } else {
+                limpiarTextos();
+                limpiarCombos();
+                desHabilitar();
+                
+            }
         }
+
     }
 
     private void agregarContacto() {
@@ -400,17 +426,18 @@ public class ProveedoresController implements Initializable {
     private void generar(ActionEvent event) {
         try {
             generarProvedor();
+
+            limpiarCombos();
+            limpiarTextos();
+            cargarTabla();
+            desHabilitar();
+            cmdCancelar.opacityProperty().set(0);
+            cmdCancelar.setDisable(true);
+            cmdNuevo.opacityProperty().set(1);
+            cmdNuevo.setDisable(false);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(ProveedoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        limpiarCombos();
-        limpiarTextos();
-        cargarTabla();
-        desHabilitar();
-        cmdCancelar.opacityProperty().set(0);
-        cmdCancelar.setDisable(true);
-        cmdNuevo.opacityProperty().set(1);
-        cmdNuevo.setDisable(false);
     }
 
     public int piso() {
@@ -444,6 +471,7 @@ public class ProveedoresController implements Initializable {
         txtDpto.setDisable(false);
         cboProvincia.setDisable(false);
         cboLocalidad.setDisable(false);
+        habilitarContacto();
     }
     
     public void desHabilitar(){
@@ -459,6 +487,7 @@ public class ProveedoresController implements Initializable {
         txtDpto.setDisable(true);
         cboProvincia.setDisable(true);
         cboLocalidad.setDisable(true);
+        deshabilitarContacto();
     }
 
     @FXML
@@ -543,4 +572,53 @@ public class ProveedoresController implements Initializable {
         new FxCbo().posicion(detalle.getLocalidad(), cboLocalidad);
     }
     
+    private boolean validar(){
+        String doc = cboTipoDoc.getValue().toString();
+        switch(doc){
+            case "CUIL":
+                if(!new Validator(txtNroDoc).isCuilOrCuit(11)) return false;
+                break;
+            case "CUIT":
+                if(!new Validator(txtNroDoc).isCuilOrCuit(11)) return false;
+                break;
+            case "DNI":
+                if(!new Validator(txtNroDoc).isDni(8)) return false;
+                break;
+        }
+        if(!new Validator(txtRazon).length(5, 200)) return false;
+        if(!new Validator(txtCalle).length(1, 50)) return false;
+        if(!new Validator(txtNro).unId(0, 99999)) return false;
+        return true;
+    }
+    private void habilitarContacto(){
+        cboTipoContacto.setDisable(false);
+        txtContacto.setDisable(false);
+        cmdAgregar.setDisable(false);
+    }
+    private void deshabilitarContacto(){
+        cboTipoContacto.setDisable(true);
+        txtContacto.setDisable(true);
+        cmdAgregar.setDisable(true);
+    }
+
+    @FXML
+    private void addContact(ActionEvent event) {
+        DetalleProveedor detalle = tblProveedores.getSelectionModel().getSelectedItem();
+        ProveedorJpaController proveedor = new ProveedorJpaController();
+        LibretacontactoJpaController libContacto = new LibretacontactoJpaController();
+        TcontactoJpaController tipoCont = new TcontactoJpaController();
+        
+        int dirId = proveedor.getDirIdByProveId(detalle.getCodigo());
+        String valueContacto = cboTipoContacto.getValue().toString();
+        int tconId = tipoCont.getByIdOfName(valueContacto);
+        String contacto = txtContacto.getText();
+        
+        Libretacontacto lcontacto = new Libretacontacto(tconId,dirId,contacto);
+        libContacto.save(lcontacto);
+        
+        cancelar(event);
+        deshabilitarContacto();
+        txtContacto.setText("");
+        
+    }
 }

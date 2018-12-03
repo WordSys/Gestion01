@@ -12,7 +12,8 @@ import ar.com.gestion.repositories.ProveedorJpaController;
 import ar.com.gestion.utils.FxCbo;
 
 import ar.com.gestion.utils.FxTable;
-import encriptation.Validator;
+import ar.com.gestion.utils.Validator;
+
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -38,34 +39,25 @@ public class StageStockController implements Initializable,InterfacePantallas {
     
     private Gestion mainApp;
 
-    @FXML
-    private TextField txtDescripcion;
-    @FXML
-    private TextField txtCantidad;
-    @FXML
-    private TextField txtpunitario;
-    @FXML
-    private TextField txtCodigo;
-    @FXML
-    private Button cmdAgregar;
-    @FXML
-    private Button cmdModificar;
-    @FXML
-    private Button cmdEliminar;
-    @FXML
-    private TextField txtBuscar;
-    @FXML
-    private Button cmdNuevo;
-    private Label lblInfo;
-    @FXML
-    private ComboBox<?> cboProveedores;
-    @FXML
-    private Button cdmProveedores;
-    @FXML
-    private AnchorPane contenedorPrimario;
-    @FXML
-    private TableView<?> tblProductos;
+    @FXML    private TextField txtDescripcion;
+    @FXML    private TextField txtCantidad;
+    @FXML    private TextField txtpunitario;
+    @FXML    private TextField txtCodigo;
+    @FXML    private TextField txtBuscar;
+    
+    @FXML    private Button cmdAgregar;
+    @FXML    private Button cmdModificar;
+    @FXML    private Button cmdEliminar;
+    @FXML    private Button cmdNuevo;
+    
+    @FXML    private AnchorPane contenedorPrimario;
 
+    @FXML    private TableView<?> tblProductos;
+    @FXML    private ComboBox<?> cboProveedores;
+
+    List<Proveedor> listProveedor;
+    List<Producto> listDetalle;
+    private Label lblInfo;
     /**
      * Initializes the controller class.
      */
@@ -75,10 +67,28 @@ public class StageStockController implements Initializable,InterfacePantallas {
     }
     
     public void cargar(){
-//        new FxTable().cargar(new ProductoJpaController().getAll(), tblProductos);
-//        
-//        new FxCbo().cargar(new ProveedorJpaController().getAll(), cboProveedores);
-//        
+        iniciarCombos();
+    }
+    
+    public void iniciarCombos(){
+        
+        ProveedorJpaController proveedorJPA = new ProveedorJpaController();
+        
+        listProveedor = proveedorJPA.getIdAndDesc();
+        
+        FxCbo provee = new FxCbo();
+        
+        provee.cargar(listProveedor, cboProveedores);
+        
+    }
+    
+    public void cargarTabla() {
+        
+        listDetalle = new ProductoJpaController().getAll();
+        
+        new FxTable().cargar(listDetalle,tblProductos);
+        tblProductos.scrollTo(listDetalle.size());
+        
     }
     
     @FXML
@@ -92,8 +102,8 @@ public class StageStockController implements Initializable,InterfacePantallas {
                     Double.valueOf(txtpunitario.getText()),
                     Integer.valueOf(cboProveedores.getId())
             );
-            new ProductoJpaController().create(p);//save(p);
-            lblInfo.setText("Se dio de alta alumno id "+p.getProdId());
+            new ProductoJpaController().save(p);
+            //lblInfo.setText("Se dio de alta alumno id "+p.getProdId());
             limpiar();
             
         }else{
@@ -104,8 +114,8 @@ public class StageStockController implements Initializable,InterfacePantallas {
     
     private void limpiar(){
         txtDescripcion.setText("");
-        txtCantidad.setText("");
-        txtpunitario.setText("");
+        txtCantidad.setText("0.00");
+        txtpunitario.setText("0.00");
         
     }
     
@@ -125,16 +135,7 @@ public class StageStockController implements Initializable,InterfacePantallas {
 //                new FxTable().removeCol(tblProductos,0);
 //                } 
     }
-
-    @FXML
-    private void buscar(KeyEvent event) {
-//          List<Producto> lista = new ProductoJpaController().getByDescripcion(txtBuscar.getText());
-//            if(lista!=null && lista.size()>0){
-//                new FxTable().cargar(lista, tblProductos);
-//                new FxTable().removeCol(tblProductos,0);
-//                }
-    }
-
+    
     @FXML
     private void borrar(ActionEvent event) {
         if(JOptionPane.showConfirmDialog(null,"Desea eliminar un producto ? ","pregunta",0)==0){
@@ -147,15 +148,46 @@ public class StageStockController implements Initializable,InterfacePantallas {
     private void nuevo(ActionEvent event){
         cmdNuevo.setDisable(true);
         cmdAgregar.setDisable(false);
+        
+    }
+    
+    private void habilitar(){
         txtDescripcion.setDisable(false);
-        txtDescripcion.requestFocus();
         txtpunitario.setDisable(false);
         txtCantidad.setDisable(false);
+        txtDescripcion.requestFocus();
+        cboProveedores.setDisable(false);
     }
-
+    
+    private void desabilitar(){
+        txtDescripcion.setDisable(true);
+        txtpunitario.setDisable(true);
+        txtCantidad.setDisable(true);
+        cmdNuevo.requestFocus();
+        cboProveedores.setDisable(true);
+    }
+    
     @Override
     public void setMainApp(Gestion mainApp) {
         this.mainApp = mainApp;
+    }
+
+    @FXML
+    private void buscarProducto(KeyEvent event) {
+        List<Producto> lista = new ProductoJpaController().getByFiltro(txtBuscar.getText());
+        if (lista != null && lista.size() > 0) {
+            new FxTable().cargar(lista,tblProductos);
+        }
+    }
+
+    @FXML
+    private void buscarProveedor(KeyEvent event) {
+        List<Proveedor> lista = new ProveedorJpaController().getLikeRazonProvee(cboProveedores.getValue().toString());
+        if (lista != null && lista.size() > 0) {
+            //cboProveedores.getSelectionModel().;
+            //new FxCbo().cargar(lista,cboProveedores);
+            
+        }
     }
 
     

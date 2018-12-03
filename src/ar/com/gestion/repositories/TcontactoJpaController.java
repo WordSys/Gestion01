@@ -236,12 +236,11 @@ public class TcontactoJpaController implements Serializable {
     }
     public List<Tcontacto> getByFiltro(String filtro){
         List<Tcontacto> lista = new ArrayList();
-        String query = "select * from tcontacto where "+filtro;
+        String query = "select tcontacto_desc from tcontacto where "+filtro;
         try {
             ResultSet rs = conn.createStatement().executeQuery(query);
             while(rs.next()){
                 Tcontacto tcontacto = new Tcontacto(
-                        rs.getInt("tcontacto_id"),
                         rs.getString("tcontacto_desc")
                 ); 
                 lista.add(tcontacto);

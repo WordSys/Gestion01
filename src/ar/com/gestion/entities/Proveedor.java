@@ -83,6 +83,11 @@ public class Proveedor implements Serializable {
         this.proveNdoc = proveNdoc;
     }
     
+    public Proveedor(Integer proveId, String proveRazon) {
+        this.proveId = proveId;
+        this.proveRazon = proveRazon;
+    }
+    
     public Proveedor(Integer proveId, String proveRazon,int tdoc_Id, long proveNdoc,int condtrib_Id,int dir_Id) {
         
         this.proveId = proveId;
@@ -250,7 +255,7 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "ar.com.gestion.entities.Proveedor[ proveId=" + proveId + " ]";
+        return  proveId + " - " + proveRazon;
     }
     
 }

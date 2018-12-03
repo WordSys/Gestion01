@@ -52,6 +52,10 @@ public class Tcontacto implements Serializable {
     public Tcontacto(Integer tcontactoId) {
         this.tcontactoId = tcontactoId;
     }
+    
+    public Tcontacto(String tcontactoDesc) {
+        this.tcontactoDesc = tcontactoDesc;
+    }
 
     public Tcontacto(Integer tcontactoId, String tcontactoDesc) {
         this.tcontactoId = tcontactoId;
